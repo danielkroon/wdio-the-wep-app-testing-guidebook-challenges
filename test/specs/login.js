@@ -1,8 +1,10 @@
 describe("Login page:", () => {
-  it("should let you log in (Chapter Challenge 2.3)", () => {
+  beforeEach(function () {
     // go to the login page
     browser.url("./login");
+  });
 
+  it("should let you log in (Chapter Challenge 2.3)", () => {
     // enter a valid username in the "email" input
     $('input[type="email"]').setValue("demo@learnwebdriverio.com");
 
@@ -28,7 +30,20 @@ describe("Login page:", () => {
     expect(browser.getUrl()).not.toContain("/login");
   });
 
-  it("should error with a missing username", () => {});
+  it("should error with a missing username", function () {
+    $('input[type="password"]').setValue("wdiodemo");
 
-  it("should error with a missing password", () => {});
+    $("button*=Sign in").click();
+
+    // assert that error message is showing
+    expect($(".error-messages li")).toHaveText(`email can't be blank`); // note the use of backticks due to the apostrophe in "can't"
+  });
+  it("should error with a missing password", function () {
+    $('input[type="email"]').setValue("demo@learnwebdriverio.com");
+
+    $("button*=Sign in").click();
+
+    // assert that error message is showing
+    expect($(".error-messages li")).toHaveText(`password can't be blank`);
+  });
 });
