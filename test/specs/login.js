@@ -1,49 +1,54 @@
-describe("Login page:", () => {
+class Auth {
+  get $email() {
+    return $('input[type="email"]');
+  }
+  get $password() {
+    return $('input[type="password"]');
+  }
+  get $signIn() {
+    return $("button*=Sign in");
+  }
+  get $errorMessages() {
+    return $(".error-messages li");
+  }
+  login(email, password) {
+    this.$email.setValue(email);
+    this.$password.setValue(password);
+    this.$signIn.click();
+    // wait until either the sign in button is gone or an error appears
+    browser.waitUntil(
+      () => {
+        const signInExists = this.$signIn.isExisting();
+        const errorExists = this.$errorMessages.isExisting();
+        return !signInExists || errorExists;
+      },
+      {
+        timoutMsg:
+          'The "Sign in" button still exists and an error never appeared',
+      }
+    );
+  }
+}
+
+const auth = new Auth();
+
+describe("Login Page", function () {
   beforeEach(function () {
-    // go to the login page
     browser.url("./login");
   });
+  it("should let you log in", function () {
+    auth.login("demo@learnwebdriverio.com", "wdiodemo");
 
-  it("should let you log in (Chapter Challenge 2.3)", () => {
-    // enter a valid username in the "email" input
-    $('input[type="email"]').setValue("demo@learnwebdriverio.com");
-
-    // enter a vlaid password in the "password" input
-    $('input[type="password"]').setValue("wdiodemo");
-
-    const $signIn = $("button*=Sign in");
-
-    // click the 'Sign in' button
-    $signIn.click();
-
-    // wait for the sign in button to be removed from the DOM
-    $signIn.waitForExist({ reverse: true });
-
-    $("=Settings").waitForExist();
-
-    // this is not necassary, but for Chapter Challenge 2.3
-    $("=Your Feed").waitForDisplayed();
-
-    expect($(".error-messages li")).not.toBeExisting();
-
-    // get the URL of the page, which should nog longer include 'login'
-    expect(browser.getUrl()).not.toContain("/login");
+    expect(auth.$errorMessages).not.toBeExisting();
   });
-
   it("should error with a missing username", function () {
-    $('input[type="password"]').setValue("wdiodemo");
-
-    $("button*=Sign in").click();
-
+    auth.login("", "wdiodemo");
     // assert that error message is showing
-    expect($(".error-messages li")).toHaveText(`email can't be blank`); // note the use of backticks due to the apostrophe in "can't"
+    expect(auth.$errorMessages).toHaveText(`email can't be blank`);
   });
   it("should error with a missing password", function () {
-    $('input[type="email"]').setValue("demo@learnwebdriverio.com");
-
-    $("button*=Sign in").click();
-
+    auth.login("demo@learnwebdriverio.com", "");
     // assert that error message is showing
-    expect($(".error-messages li")).toHaveText(`password can't be blank`);
+    expect(auth.$errorMessages).toHaveText(`password can't be blank`);
   });
 });
