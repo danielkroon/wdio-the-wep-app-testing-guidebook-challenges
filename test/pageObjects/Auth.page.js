@@ -1,6 +1,8 @@
-class Auth {
-  load() {
-    browser.url("./login");
+const Generic = require("./Generic.page");
+
+class Auth extends Generic {
+  constructor() {
+    super("./login");
   }
 
   get $email() {
@@ -20,14 +22,19 @@ class Auth {
   }
 
   login({ email, password }) {
+    this.load();
+
     this.$email.setValue(email);
     this.$password.setValue(password);
+
     this.$signIn.click();
+
     // wait until either the sign in button is gone or an error appears
     browser.waitUntil(
       () => {
         const signInExists = this.$signIn.isExisting();
         const errorExists = this.$errorMessages.isExisting();
+
         return !signInExists || errorExists;
       },
       {

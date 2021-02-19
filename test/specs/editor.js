@@ -7,14 +7,11 @@ const editor = new Editor();
 
 describe("Post Editor", function () {
   before(function () {
-    auth.load();
     auth.login(user1);
   });
-  beforeEach(function () {
-    editor.load();
-  });
+
   it("should load page properly", function () {
-    expect(browser).toHaveUrl("editor", { containing: true });
+    expect(browser).toHaveUrl(editor.url.href);
     expect(editor.$title).toBeExisting();
     expect(editor.$description).toBeExisting();
     expect(editor.$body).toBeExisting();

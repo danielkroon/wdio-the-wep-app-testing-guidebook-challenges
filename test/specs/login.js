@@ -4,9 +4,6 @@ const auth = new Auth();
 const { user1 } = require("../fixtures/users");
 
 describe("Login Page", function () {
-  beforeEach(function () {
-    auth.load();
-  });
   it("should let you log in", function () {
     auth.login(user1);
 

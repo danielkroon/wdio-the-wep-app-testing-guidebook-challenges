@@ -1,7 +1,10 @@
-class Editor {
-  load() {
-    browser.url("./editor");
+const Generic = require("./Generic.page");
+
+class Editor extends Generic {
+  constructor() {
+    super("./editor");
   }
+
   get $title() {
     return $('[data-qa-id="editor-title"]');
   }
