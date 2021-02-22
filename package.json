@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@wdio/cli": "^7.0.4"
+    "@wdio/cli": "^7.0.4",
+    "chance": "^1.1.7"
   },
   "devDependencies": {
     "@wdio/local-runner": "^7.0.4",
