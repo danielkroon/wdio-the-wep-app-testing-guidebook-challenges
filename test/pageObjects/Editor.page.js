@@ -20,6 +20,12 @@ class Editor extends Generic {
   get $publish() {
     return $('[data-qa-id="editor-publish"]');
   }
+  get $$tagsListItems() {
+    return $$(".tag-list .tag-pill");
+  }
+  get tagsListItems() {
+    return this.$$tagsListItems.map(($tag) => $tag.getText());
+  }
 
   submitArticle({ title, description, body, tags }) {
     this.$title.setValue(title);

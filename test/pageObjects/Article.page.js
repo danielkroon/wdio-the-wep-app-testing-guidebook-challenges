@@ -31,5 +31,9 @@ class Article extends Generic {
   get tagsText() {
     return this.$$tags.map(($tag) => $tag.getText());
   }
+
+  waitForLoad() {
+    this.$container.waitForExist();
+  }
 }
 module.exports = Article;

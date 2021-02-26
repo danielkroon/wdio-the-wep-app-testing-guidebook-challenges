@@ -7,19 +7,15 @@ const auth = new Auth();
 const editor = new Editor();
 const article = new Article();
 
-// Load Chance
-const Chance = require("chance");
-
-// Instantiate Chance so it can be used
-const chance = new Chance();
-
 describe("Post Editor", function () {
   before(function () {
     auth.login(user1);
   });
+
   beforeEach(function () {
     editor.load();
   });
+
   it("should load page properly", function () {
     expect(browser).toHaveUrl(editor.url.href);
     expect(editor.$title).toBeExisting();
@@ -32,10 +28,10 @@ describe("Post Editor", function () {
   it("should let you publish a new post", function () {
     // store the article information as a separate object and send it into submitArticle. So we assert the article information.
     const articleDetails = {
-      title: chance.sentence({ words: 3 }),
-      description: chance.sentence({ words: 7 }),
-      body: chance.paragraph({ sentences: 4 }),
-      tags: [chance.word(), chance.word()],
+      title: global.chance.sentence({ words: 3 }),
+      description: global.chance.sentence({ words: 7 }),
+      body: global.chance.paragraph({ sentences: 4 }),
+      tags: [global.chance.word(), chance.word()],
     };
 
     editor.submitArticle(articleDetails);
@@ -72,5 +68,31 @@ describe("Post Editor", function () {
 
     // to avoid making a lot of articles, let's just click the delete button to // clean it up. We'll talk about a better way to clean it later on.
     article.$delete.click();
+  });
+});
+
+describe('"Unsaved Changes" alerts', function () {
+  beforeEach(function () {
+    editor.load();
+    editor.$title.setValue("Unsaved Change");
+  });
+
+  it("should alert you when using browser navigation", function () {
+    // try refreshing the page
+    browser.refresh();
+
+    // validate alert is showing
+    expect(() => browser.acceptAlert()).not.toThrow();
+  });
+
+  it("should warn you when trying to change URL", function () {
+    // try going to the homepage
+    $("=Home").click();
+    const alertText = browser.getAlertText();
+    expect(alertText).toEqual(
+      "Do you really want to leave? You have unsaved changes!"
+    );
+    // accept the alert to avoid it from preventing further tests from executing
+    browser.acceptAlert();
   });
 });
