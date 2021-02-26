@@ -6,7 +6,7 @@ describe("Main Navigation:", () => {
     browser.url("./");
 
     /*
-    Get the title of the homepage, should be 'Conduit'
+    Get the title of the homepage, should be 'Conduit'. Checking titles (text) is NOT a best practice. This is just an example. Check text and links isn't worth writing a test for.
     */
 
     // Using a console log to manually assert the value.

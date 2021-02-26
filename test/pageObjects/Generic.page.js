@@ -12,6 +12,10 @@ class Generic {
   load() {
     browser.url(this.path);
   }
+
+  /* 
+  By including these references in the Generic page object, anything that extends off of it will have those references (hence home.$siteHeader in the test file). This is useful for sharing common page template details across all your files.
+  */
   get $siteHeader() {
     return $('[data-qa-id="site-header"]');
   }
