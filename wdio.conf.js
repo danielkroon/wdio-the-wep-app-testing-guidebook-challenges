@@ -1,3 +1,6 @@
+const Api = require("./utils/Api");
+
+// Load Chance
 const Chance = require("chance");
 
 // Instantiate Chance so it can be used
@@ -202,6 +205,28 @@ exports.config = {
     // we create a Chance instance using the base seed,
     // plus the path of the file (specs[0])
     global.chance = new Chance(process.env.SEED + specs[0]);
+
+    global.api = new Api("http://localhost:3000/api/");
+
+    browser.addCommand("loginViaApi", function (user) {
+      const token = browser.call(() => {
+        return global.api.getAuthToken(user);
+      });
+
+      // load the base page so we can set the token
+      browser.url("./");
+
+      // inject the auth token
+      browser.execute((browserToken) => {
+        window.localStorage.setItem("id_token", browserToken);
+      }, token);
+    });
+
+    browser.addCommand("clearSession", function () {
+      browser.execute(function () {
+        window.localStorage.clear();
+      });
+    });
   },
   /**
    * Runs before a WebdriverIO command gets executed.

@@ -26,8 +26,8 @@ describe("Homepage", function () {
 
   describe("Logged In", function () {
     before(function () {
-      auth.load();
-      auth.login(user1);
+      browser.loginViaApi(user1);
+
       home.load();
     });
 
@@ -36,7 +36,7 @@ describe("Homepage", function () {
       expect(home.feedTabsText).toEqual(["Your Feed", "Global Feed"]);
     });
     after(function () {
-      auth.clearSession();
+      browser.clearSession();
     });
   });
 });
