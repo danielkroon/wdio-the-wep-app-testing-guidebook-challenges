@@ -9,7 +9,7 @@ const article = new Article();
 
 describe("Post Editor", function () {
   before(function () {
-    auth.login(user1);
+    browser.loginViaApi(user1);
   });
 
   beforeEach(function () {

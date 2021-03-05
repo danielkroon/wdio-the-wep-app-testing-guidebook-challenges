@@ -35,6 +35,12 @@ describe("Homepage", function () {
       console.log("feedsContainer HTML is " + home.$feedsContainer.getHTML());
       expect(home.feedTabsText).toEqual(["Your Feed", "Global Feed"]);
     });
+
+    it('should default to showing the "global" feed', function () {
+      // get all tabs with an 'active' class, check only one returns with correct text
+      // expect(home.activeFeedTabText).toEqual(["Global Feed"]);
+    });
+
     after(function () {
       browser.clearSession();
     });
