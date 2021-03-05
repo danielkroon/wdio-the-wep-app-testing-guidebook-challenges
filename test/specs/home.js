@@ -32,13 +32,11 @@ describe("Homepage", function () {
     });
 
     it("should show both feed tabs", function () {
-      console.log("feedsContainer is: " + JSON.stringify(home.$feedsContainer));
-      console.log("$feedTabs is: " + JSON.stringify(home.$$feedTabs));
-      console.log("feedTabsText is: " + home.feedTabsText);
+      console.log("feedsContainer HTML is " + home.$feedsContainer.getHTML());
       expect(home.feedTabsText).toEqual(["Your Feed", "Global Feed"]);
     });
     after(function () {
-      // run steps to log out
+      auth.clearSession();
     });
   });
 });
