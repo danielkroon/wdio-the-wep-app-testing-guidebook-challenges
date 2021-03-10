@@ -25,6 +25,19 @@ class Api {
       console.log(error);
     }
   }
+
+  async createArticle(user, details) {
+    const token = await this.getAuthToken(user);
+    const response = await this.client.post("articles", {
+      json: {
+        article: details,
+      },
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    });
+    return response.body.article;
+  }
 }
 
 module.exports = Api;

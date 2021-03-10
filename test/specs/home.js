@@ -76,8 +76,9 @@ describe("Homepage", function () {
         const firstArticleDetails = home.currentFeed.articles[0].getDetails();
 
         console.log(firstArticleDetails);
+        console.log(Object.getOwnPropertyNames(firstArticleDetails));
 
-        // expect(firstArticleDetails).toHaveProperty("author");
+        //  expect(firstArticleDetails).toHaveProperty('"author"');
         // expect(firstArticleDetails).toHaveProperty("date", "March 10, 2021");
         // expect(firstArticleDetails).toHaveProperty("title", "sadfasd");
         // expect(firstArticleDetails).toHaveProperty("description", "asdfasdf");
