@@ -1,9 +1,15 @@
 const Generic = require("./Generic.page");
+const Feed = require("./components/Feed.component");
 const { getTrimmedText } = require("../../utils/functions");
 
 class Home extends Generic {
   constructor() {
     super("./");
+  }
+
+  load() {
+    super.load();
+    this.currentFeed.waitForLoad();
   }
 
   get $feedsContainer() {
@@ -19,6 +25,26 @@ class Home extends Generic {
     return this.$feedsContainer
       .$$('[data-qa-type="feed-tab"] .active') // paste: [data-qa-type="feed-tab"] .active in Chrome Dev Tools to check.
       .map(getTrimmedText);
+  }
+
+  get currentFeed() {
+    return new Feed('[data-qa-type="article-list"]');
+  }
+
+  clickTab(tabText) {
+    const tabToClick = this.$$feedTabs.find(
+      ($tab) => $tab.getText() === tabText
+    );
+
+    tabToClick.click();
+
+    browser.waitUntil(
+      () => {
+        return this.activeFeedTabText[0] === tabText;
+      },
+      { timeoutMsg: "Active tab text never switched to desired text" }
+    );
+    this.currentFeed.waitForLoad();
   }
 }
 

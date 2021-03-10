@@ -1,0 +1,12 @@
+{
+  "env": {
+    "es2021": true,
+    "node": true
+  },
+  "plugins": ["wdio"],
+  "extends": "plugin:wdio/recommended",
+  "parserOptions": {
+    "ecmaVersion": 12
+  },
+  "rules": {}
+}
