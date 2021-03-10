@@ -7,6 +7,7 @@ Navigate into the wdio-realworld folder and run one of the commands below.
 Run the login spec file and silence the extensive log with the flag --logLevel=silent:
 
 ```bash
+npx wdio --logLevel=silent    
 npx wdio --spec=login --logLevel=silent
 ```
 
