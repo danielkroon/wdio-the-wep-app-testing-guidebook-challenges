@@ -31,6 +31,13 @@ class Home extends Generic {
     return new Feed('[data-qa-type="article-list"]');
   }
 
+  get $$popularTags() {
+    return $$('//p[text()="Popular Tags"]/following-sibling::div/a');
+  }
+  get popularTags() {
+    return this.$$popularTags.map(getTrimmedText);
+  }
+
   clickTab(tabText) {
     const tabToClick = this.$$feedTabs.find(
       ($tab) => $tab.getText() === tabText
