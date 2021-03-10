@@ -5,6 +5,7 @@
 Navigate into the wdio-realworld folder and run one of the commands below.
 
 Run all spec files at once:
+
 ```bash
 npx wdio --logLevel=silent    
 ```
