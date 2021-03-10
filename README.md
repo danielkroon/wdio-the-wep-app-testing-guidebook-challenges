@@ -33,6 +33,8 @@ SEED=0.00726358915055525 npx wdio --spec=login
 - Don't do URL assertions.
 - Use the native WebdriverIO Expect assertions library or the ExpectJS accesertions library. Not the NodeJS Assert API or a simple if statement.
 - Add users to test/fixtures/users.js. TODO we should create a .env file.
+- If you use certain UI components in multiple pages. Please create a component for it. For example: https://www.youtube.com/watch?v=rIsMhWfu2L8
+- If you created data for a test. For example in a before hook. Also delete this data in a after hook. Don't do this via the UI but via an API request.
 
 ## Naming Conventions
 

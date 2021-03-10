@@ -38,6 +38,13 @@ class Api {
     });
     return response.body.article;
   }
+
+  async deleteArticle(user, slug) {
+    const token = await this.getAuthToken(user);
+    return this.client.delete(`articles/${slug}`, {
+      headers: { Authorization: `Token ${token}` },
+    });
+  }
 }
 
 module.exports = Api;

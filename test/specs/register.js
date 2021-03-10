@@ -23,6 +23,7 @@ describe("Register Page", function () {
     // Get the URL of the page, which should no longer include 'register'
     expect(browser).not.toHaveUrl(register.url.href);
   });
+
   it("should error with a missing username", function () {
     register.submit({
       username: "",
@@ -32,6 +33,7 @@ describe("Register Page", function () {
 
     expect(register.$errorMessages).toHaveText(`username can't be blank`);
   });
+
   it("should error with an already registered username", function () {
     // use a timestamp to generate "unique" username/email every test run
     const uniqueUsername = username + Date.now();

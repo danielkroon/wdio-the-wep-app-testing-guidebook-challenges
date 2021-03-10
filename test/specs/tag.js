@@ -3,6 +3,7 @@ const TagPage = require("../pageObjects/Tag.page");
 
 describe("Tags Feed", function () {
   let articleDetails, tagName, tagPage;
+  let articleResponse;
 
   before(function () {
     articleDetails = {
@@ -15,7 +16,7 @@ describe("Tags Feed", function () {
     tagName = articleDetails.tagList[0];
 
     // create the article we need to get the specific tag
-    const articleResponse = browser.call(() => {
+    articleResponse = browser.call(() => {
       return global.api.createArticle(user1, articleDetails);
     });
 
@@ -40,6 +41,12 @@ describe("Tags Feed", function () {
     expect(firstArticleDetails).toMatchObject({
       title: articleDetails.title,
       description: articleDetails.description,
+    });
+  });
+
+  after(function () {
+    browser.call(() => {
+      return global.api.deleteArticle(user1, articleResponse.slug);
     });
   });
 });
